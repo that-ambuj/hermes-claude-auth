@@ -23,6 +23,9 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Install PyYAML
+        run: pip install pyyaml==6.0.2
+
       - name: Verify tag matches plugin.yaml version
         run: |
           set -e

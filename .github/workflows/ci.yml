@@ -32,6 +32,9 @@ jobs:
       - name: Structural test (no hermes-agent required)
         run: python scripts/structural_test.py
 
+      - name: Install PyYAML (for manifest validation)
+        run: pip install pyyaml==6.0.2
+
       - name: Verify plugin.yaml is well-formed
         run: |
           python - <<'PY'
