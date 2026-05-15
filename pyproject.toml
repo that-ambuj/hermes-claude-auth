@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "hermes-claude-auth"
 version = "0.1.0"
-description = "Use a Claude Code subscription with Hermes Agent — exposes an anthropic-subscription provider that reuses ~/.claude/.credentials.json."
+description = "Hermes plugin that uses your Claude Code credentials — no separate login needed."
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
