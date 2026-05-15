@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hermes-claude-auth"
+version = "0.1.0"
+description = "Use a Claude Code subscription with Hermes Agent — exposes an anthropic-subscription provider that reuses ~/.claude/.credentials.json."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "that-ambuj" }]
+keywords = ["hermes", "hermes-agent", "claude", "anthropic", "oauth", "claude-code"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/that-ambuj/hermes-claude-auth"
+Source = "https://github.com/that-ambuj/hermes-claude-auth"
+Issues = "https://github.com/that-ambuj/hermes-claude-auth/issues"
+
+[tool.setuptools]
+py-modules = []

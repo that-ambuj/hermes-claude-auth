@@ -1,0 +1,67 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  syntax-and-structure:
+    name: py_compile + structural test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Syntax check (py_compile every .py)
+        run: |
+          set -e
+          python -m py_compile __init__.py _model_config.py _betas.py _patches.py scripts/smoke_test.py
+          echo "All Python files compiled successfully."
+
+      - name: Structural test (no hermes-agent required)
+        run: python scripts/structural_test.py
+
+      - name: Verify plugin.yaml is well-formed
+        run: |
+          python - <<'PY'
+          import yaml
+          with open("plugin.yaml") as f:
+              data = yaml.safe_load(f)
+          assert data["name"] == "hermes-claude-auth", f"name mismatch: {data.get('name')!r}"
+          assert data["kind"] == "standalone", f"kind must be 'standalone' for general plugin loader, got {data.get('kind')!r}"
+          assert data["manifest_version"] == 1
+          assert data["version"], "version required"
+          print("plugin.yaml valid:", data)
+          PY
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+
+  ruff:
+    name: ruff
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ruff
+        run: pip install ruff==0.7.4
+
+      - name: Lint (non-blocking)
+        continue-on-error: true
+        run: ruff check . --output-format=github

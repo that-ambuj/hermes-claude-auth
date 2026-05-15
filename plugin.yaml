@@ -1,0 +1,6 @@
+name: hermes-claude-auth
+kind: standalone
+manifest_version: 1
+version: 0.1.0
+description: Use a Claude Code subscription with Hermes - strips Extra-Usage-triggering betas, mirrors opencode-claude-auth retry-on-400 logic, reuses ~/.claude/.credentials.json for OAuth.
+author: that-ambuj
